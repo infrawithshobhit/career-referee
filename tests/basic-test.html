@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Referee - Basic Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Career Referee - Basic Tests</h1>
+    <div id="test-results"></div>
+
+    <script src="../frontend/app.js"></script>
+    <script>
+        // Basic test suite
+        async function runTests() {
+            const results = [];
+            
+            // Test 1: Check if roles data loads
+            try {
+                const response = await fetch('../data/roles.json');
+                const data = await response.json();
+                results.push({
+                    name: 'Roles data loads successfully',
+                    pass: data.roles && data.roles.length === 4,
+                    details: `Found ${data.roles ? data.roles.length : 0} roles`
+                });
+            } catch (error) {
+                results.push({
+                    name: 'Roles data loads successfully',
+                    pass: false,
+                    details: `Error: ${error.message}`
+                });
+            }
+
+            // Test 2: Euclidean distance calculation
+            const testProfile = { coding: 3, ops: 3, stress: 3, salary: 3, worklife: 3 };
+            const testRole = { coding: 5, ops: 1, stress: 4, salary: 2, worklife: 3 };
+            
+            // Manual calculation: sqrt((3-5)² + (3-1)² + (3-4)² + (3-2)² + (3-3)²) = sqrt(4+4+1+1+0) = sqrt(10) ≈ 3.16
+            const expectedDistance = Math.sqrt(10);
+            
+            // Create a temporary CareerReferee instance to test the method
+            const tempReferee = new CareerReferee();
+            const actualDistance = tempReferee.calculateEuclideanDistance(testProfile, testRole);
+            
+            results.push({
+                name: 'Euclidean distance calculation',
+                pass: Math.abs(actualDistance - expectedDistance) < 0.01,
+                details: `Expected: ${expectedDistance.toFixed(2)}, Got: ${actualDistance.toFixed(2)}`
+            });
+
+            // Test 3: Profile validation (using test utilities)
+            const validProfile = { coding: 3, ops: 4, stress: 2, salary: 5, worklife: 1 };
+            const invalidProfile = { coding: 6, ops: 0, stress: 'high' };
+            
+            results.push({
+                name: 'Profile validation works',
+                pass: TestUtils.isValidProfile(validProfile) && !TestUtils.isValidProfile(invalidProfile),
+                details: `Valid profile: ${TestUtils.isValidProfile(validProfile)}, Invalid profile: ${TestUtils.isValidProfile(invalidProfile)}`
+            });
+
+            // Display results
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            const container = document.getElementById('test-results');
+            let html = '';
+            
+            results.forEach(result => {
+                html += `
+                    <div class="test-result ${result.pass ? 'pass' : 'fail'}">
+                        <strong>${result.pass ? '✅' : '❌'} ${result.name}</strong><br>
+                        ${result.details}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            const passCount = results.filter(r => r.pass).length;
+            const totalCount = results.length;
+            
+            html += `
+                <div class="test-result ${passCount === totalCount ? 'pass' : 'fail'}">
+                    <strong>Summary: ${passCount}/${totalCount} tests passed</strong>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        // Load test utilities and run tests
+        fetch('../tests/test-setup.js')
+            .then(response => response.text())
+            .then(code => {
+                eval(code); // Load TestUtils
+                runTests();
+            })
+            .catch(error => {
+                document.getElementById('test-results').innerHTML = `
+                    <div class="test-result fail">
+                        <strong>❌ Failed to load test utilities</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "roles": [
+    {
+      "name": "SRE",
+      "coding": 4,
+      "ops": 5,
+      "stress": 5,
+      "salary": 5,
+      "worklife": 1,
+      "description": "Site Reliability Engineer - Ensures system uptime and performance at scale",
+      "risks": ["High burnout potential", "On-call stress", "Blame culture exposure"],
+      "growthAreas": ["System design", "Incident response", "Automation", "Monitoring"]
+    },
+    {
+      "name": "DevOps",
+      "coding": 3,
+      "ops": 4,
+      "stress": 4,
+      "salary": 4,
+      "worklife": 2,
+      "description": "DevOps Engineer - Bridges development and operations for faster delivery",
+      "risks": ["Tool fatigue", "Constant learning curve", "Cross-team conflicts"],
+      "growthAreas": ["CI/CD pipelines", "Infrastructure as Code", "Container orchestration", "Cloud platforms"]
+    },
+    {
+      "name": "Platform Engineer",
+      "coding": 5,
+      "ops": 3,
+      "stress": 3,
+      "salary": 5,
+      "worklife": 4,
+      "description": "Platform Engineer - Builds internal tools and platforms for developer productivity",
+      "risks": ["Scope creep", "Internal politics", "Technology debt"],
+      "growthAreas": ["API design", "Developer experience", "Microservices", "Platform architecture"]
+    },
+    {
+      "name": "Cloud Engineer",
+      "coding": 3,
+      "ops": 2,
+      "stress": 2,
+      "salary": 3,
+      "worklife": 5,
+      "description": "Cloud Engineer - Manages cloud infrastructure and services",
+      "risks": ["Vendor lock-in", "Cost optimization pressure", "Compliance complexity"],
+      "growthAreas": ["Cloud certifications", "Cost optimization", "Security best practices", "Multi-cloud strategies"]
+    }
+  ]
+}
