@@ -141,4 +141,4 @@ career-referee/
 
 ---
 
-*Built with Kiro AI Assistant for AI for Bharat Week 6 Challenge*
+*Built with Kiro AIs help but skills have been used for AI for Bharat Week 6 Challenge*
